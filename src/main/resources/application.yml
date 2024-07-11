@@ -1,9 +1,9 @@
 ## YAML Template.
 ---
 spring:
-  application.name: Config
+  application.name: config
   profiles.active: native
-  cloud.config.server.native.searchLocations: file:./src/main/resources/config-repo/
+  cloud.config.server.native.searchLocations: file:./src/main/resources/config-repo
   
 server.port: 8888
 
@@ -13,7 +13,8 @@ management:
 
 logging:
   level:
-    root: trace
+    root: INFO
 ---
-spring.config.activate.on-profile: docker
-spring.cloud.config.server.native.searchLocations: file:/config-repo
+spring:
+  config.activate.on-profile: docker
+  cloud.config.server.native.searchLocations: file:/app/config-repo

@@ -1,5 +1,33 @@
 ## YAML Template.
 ---
+spring:
+  cloud.gateway:
+      routes:
+        - id: service_a_get_all
+          uri: http://localhost:81
+          predicates:
+            - Path=/api/service-a/a1
+            - Method=GET
+          filters:
+            - RewritePath=/api/service-a/a1, /a1
+        - id: service_a_post_save
+          uri: http://localhost:81
+          predicates:
+            - Path=/api/service-a/a1
+            - Method=POST
+          filters:
+            - RewritePath=/api/service-a/a1, /a1
+        - id: service-a-swagger-ui-1
+          uri: http://localhost:81
+          predicates:
+            - Path=/openapi/service-a/**
+          filters:
+            - RewritePath=/openapi/service-a/(?<path>.*), /$\{path}
+        - id: service-a-swagger-ui-2
+          uri: http://localhost:81
+          predicates:
+            - Path=/v3/api-docs/**
+
 server:
   port: 8080
   forward-headers-strategy: framework
@@ -10,78 +38,35 @@ logging:
     org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
     org.springframework.cloud.gateway: TRACE
 
-spring:
-  application:
-    name: Gateway
-
-  cloud:
-    gateway:
-      routes:
-        - id: service_a_get_all
-          uri: http://localhost:81
-          predicates:
-            - Path=/api/serviceA/a1
-            - Method=GET
-          filters:
-            - RewritePath=/api/serviceA/a1, /a1
-        - id: service_a_post_save
-          uri: http://localhost:81
-          predicates:
-            - Path=/api/serviceA/a1
-            - Method=POST
-          filters:
-            - RewritePath=/api/serviceA/a1, /a1
-        - id: service-a-swagger-ui-1
-          uri: http://localhost:81
-          predicates:
-            - Path=/openapi/serviceA/**
-          filters:
-            - RewritePath=/openapi/serviceA/(?<path>.*), /$\{path}
-        - id: service-a-swagger-ui-2
-          uri: http://localhost:81
-          predicates:
-            - Path=/v3/api-docs/**
-
-
 ---
 spring.config.activate.on-profile: docker
 server.port: 8080
 
 spring:
-  application:
-    name: Gateway
-
-  cloud:
-    gateway:
+  cloud.gateway:
       routes:
         - id: service_a_get_all
           uri: http://service-a:8080
           predicates:
-            - Path=/api/serviceA/a1
+            - Path=/api/service-a/a1
             - Method=GET
           filters:
-            - RewritePath=/api/serviceA/a1, /a1
+            - RewritePath=/api/service-a/a1, /a1
         - id: service_a_post_save
           uri: http://service-a:8080
           predicates:
-            - Path=/api/serviceA/a1
+            - Path=/api/service-a/a1
             - Method=POST
           filters:
-            - RewritePath=/api/serviceA/a1, /a1
-        - id: service_b_get_a1
-          uri: http://service-b:8080
-          predicates:
-            - Path=/api/serviceB/a1/**
-            - Method=GET
-          filters:
-            - RewritePath=/api/(?<path>.*), /$\{path}
+            - RewritePath=/api/service-a/a1, /a1
         - id: service-a-swagger-ui-1
           uri: http://service-a:8080
           predicates:
-            - Path=/openapi/serviceA/**
+            - Path=/openapi/service-a/**
           filters:
-            - RewritePath=/openapi/serviceA/(?<path>.*), /$\{path}
+            - RewritePath=/openapi/service-s/(?<path>.*), /$\{path}
         - id: service-a-swagger-ui-2
           uri: http://service-a:8080
           predicates:
             - Path=/v3/api-docs/**
+    
