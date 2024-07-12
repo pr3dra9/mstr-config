@@ -8,6 +8,6 @@ WORKDIR /app
 COPY target/config-0.0.1-SNAPSHOT.jar /app/app.jar
 RUN mkdir config-repo
 COPY src/main/resources/config-repo /app/config-repo
-EXPOSE 8888
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
 CMD ["/bin/sh"]

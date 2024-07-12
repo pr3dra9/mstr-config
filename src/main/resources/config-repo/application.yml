@@ -8,4 +8,5 @@ management:
 
 ---
 spring.config.activate.on-profile: docker
-spring.cloud.config.uri: http://config:8888
+spring.cloud.config.uri: http://config:8080
+spring.devtools.add-properties: false
