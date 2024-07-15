@@ -39,10 +39,9 @@ logging:
     org.springframework.cloud.gateway: TRACE
 
 ---
-spring.config.activate.on-profile: docker
-server.port: 8080
-
 spring:
+  config:
+    activate.on-profile: docker
   cloud.gateway:
       routes:
         - id: service_a_get_all
@@ -69,4 +68,6 @@ spring:
           uri: http://service-a:8080
           predicates:
             - Path=/v3/api-docs/**
+
+server.port: 8080
     

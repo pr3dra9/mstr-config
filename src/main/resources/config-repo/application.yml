@@ -1,12 +1,37 @@
 ## YAML Template.
 ---
-spring.cloud.config.uri: http://localhost:8888
+spring:
+  cloud.config:
+      uri: http://localhost:8889
+  devtools:
+    restart.enabled: false
 
 management:
   endpoint.health.show-details: "ALWAYS"
   endpoints.web.exposure.include: "*"
 
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl.defaultZone: http://localhost:8761/eureka/
+
+logging:
+  level:
+    root: INFO
+    logging.level.org.springframework: INFO
+    org.springframework.cloud.config: INFO
+    org.springframework.cloud.gateway: INFO
+      
 ---
-spring.config.activate.on-profile: docker
-spring.cloud.config.uri: http://config:8080
-spring.devtools.add-properties: false
+spring:
+  config:
+    activate.on-profile: docker
+  cloud.config:
+    uri: http://config:8080
+
+eureka:
+  client:
+    serviceUrl.defaultZone: http://discovery:8080/eureka/

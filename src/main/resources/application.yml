@@ -1,22 +1,18 @@
 ## YAML Template.
 ---
 spring:
-  application.name: config
-  profiles.active: native
-  cloud.config.server.native.searchLocations: file:./src/main/resources/config-repo
-  
-server.port: 8888
+  #application.name: config
+  #profiles.active: native
+  #cloud:
+    #config:
+      #server.native.searchLocations: file:./src/main/resources/config-repo
+      #uri: http://localhost:8888
+  devtools.restart.enabled: false
 
-management:
-  endpoint.health.show-details: "ALWAYS"
-  endpoints.web.exposure.include: "*"
-
-logging:
-  level:
-    root: INFO
 ---
 spring:
   config.activate.on-profile: docker
-  cloud.config.server.native.searchLocations: file:/app/config-repo
 
-server.port: 8080
+  #cloud.config:
+    #server.native.searchLocations: file:/app/config-repo
+    #uri: http://config:8080
