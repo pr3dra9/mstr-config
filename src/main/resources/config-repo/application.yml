@@ -1,8 +1,15 @@
 ## YAML Template.
 ---
 spring:
-  cloud.config:
-      uri: http://localhost:8889
+  cloud:
+    config:
+      uri: http://localhost:8888
+    stream:
+      default-binder: kafka
+      kafka.binder:
+        brokers: localhost
+        defaultBrokerPort: 9092
+
   devtools:
     restart.enabled: false
 
@@ -14,23 +21,38 @@ eureka:
   instance:
     preferIpAddress: true
   client:
-    registerWithEureka: false
-    fetchRegistry: false
+    registerWithEureka: true
+    fetchRegistry: true
     serviceUrl.defaultZone: http://localhost:8761/eureka/
 
 logging:
   level:
     root: INFO
-    logging.level.org.springframework: INFO
+    org.springframework: INFO
+    org.springframework.boot.actuate: INFO
+    org.springframework.boot.actuate.endpoint: INFO
+    org.springframework.boot.actuate.metrics: INFO
     org.springframework.cloud.config: INFO
+    org.springframework.cloud.config.client: INFO
+    org.springframework.cloud.config.server: INFO
     org.springframework.cloud.gateway: INFO
-      
+    org.springframework.cloud.client.discovery: INFO
+    org.springframework.web: INFO
+    org.springframework.web.servlet: INFO
+    org.springframework.web.client: INFO
+    org.apache.kafka: INFO
+    
 ---
 spring:
   config:
     activate.on-profile: docker
-  cloud.config:
-    uri: http://config:8080
+  cloud:
+    config:
+      uri: http://config:8080
+    stream:
+      kafka.binder:
+        brokers: kafka
+        defaultBrokerPort: 9092
 
 eureka:
   client:

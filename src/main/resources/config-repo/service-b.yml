@@ -1,0 +1,46 @@
+## YAML Template.
+---
+server.port: 82
+
+spring:
+  cloud:
+    function:
+      definition: consumeMessage;consumeCreateA2Message;consumeUpdateA2Message;consumeDeleteA2Message
+    stream:
+      bindings:
+        a2-out-0:
+          destination: a2
+        consumeMessage-in-0:
+          destination: a2
+          group: bservice
+
+        createA2-out-0:
+          destination: a2CreateRequest
+          content-type: application/json
+        consumeCreateA2Message-in-0:
+          destination: a2CreateResponse
+          #destination: a2CreateRequest
+          #group: b2CreateA2
+          content-type: application/json
+
+        updateA2-out-0:
+          destination: a2UpdateRequest
+          content-type: application/json
+        consumeUpdateA2Message-in-0:
+          destination: a2UpdateResponse
+          group: b2UpdateA2
+          content-type: application/json
+
+        deleteA2-out-0:
+          destination: a2DeleteRequest
+          content-type: application/json
+        consumeDeleteA2Message-in-0:
+          destination: a2DeleteResponse
+          group: b2DeleteA2
+
+---
+spring:
+  config:
+    activate.on-profile: docker
+
+server.port: 8080
