@@ -4,27 +4,27 @@ spring:
   cloud.gateway:
       routes:
         - id: service_a_get_all
-          uri: http://localhost:81
+          uri: lb://service-a
           predicates:
             - Path=/api/service-a/a1
             - Method=GET
           filters:
             - RewritePath=/api/service-a/a1, /a1
         - id: service_a_post_save
-          uri: http://localhost:81
+          uri: lb://service-a
           predicates:
             - Path=/api/service-a/a1
             - Method=POST
           filters:
             - RewritePath=/api/service-a/a1, /a1
         - id: service-a-swagger-ui-1
-          uri: http://localhost:81
+          uri: lb://service-a
           predicates:
             - Path=/openapi/service-a/**
           filters:
             - RewritePath=/openapi/service-a/(?<path>.*), /$\{path}
         - id: service-a-swagger-ui-2
-          uri: http://localhost:81
+          uri: lb://service-a
           predicates:
             - Path=/v3/api-docs/**
 
@@ -42,32 +42,6 @@ logging:
 spring:
   config:
     activate.on-profile: docker
-  cloud.gateway:
-      routes:
-        - id: service_a_get_all
-          uri: http://service-a:8080
-          predicates:
-            - Path=/api/service-a/a1
-            - Method=GET
-          filters:
-            - RewritePath=/api/service-a/a1, /a1
-        - id: service_a_post_save
-          uri: http://service-a:8080
-          predicates:
-            - Path=/api/service-a/a1
-            - Method=POST
-          filters:
-            - RewritePath=/api/service-a/a1, /a1
-        - id: service-a-swagger-ui-1
-          uri: http://service-a:8080
-          predicates:
-            - Path=/openapi/service-a/**
-          filters:
-            - RewritePath=/openapi/service-s/(?<path>.*), /$\{path}
-        - id: service-a-swagger-ui-2
-          uri: http://service-a:8080
-          predicates:
-            - Path=/v3/api-docs/**
 
 server.port: 8080
     
