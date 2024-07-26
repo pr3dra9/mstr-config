@@ -5,14 +5,14 @@ server.port: 82
 spring:
   cloud:
     function:
-      definition: consumeMessage;consumeCreateA2Message;consumeUpdateA2Message;consumeDeleteA2Message
+      definition: consumeCreateA2Message;consumeUpdateA2Message;consumeDeleteA2Message
     stream:
       bindings:
         a2-out-0:
           destination: a2
         consumeMessage-in-0:
           destination: a2
-          group: bservice
+          group: service-b
 
         createA2-out-0:
           destination: a2CreateRequest
@@ -20,7 +20,7 @@ spring:
         consumeCreateA2Message-in-0:
           destination: a2CreateResponse
           #destination: a2CreateRequest
-          #group: b2CreateA2
+          group: service-b
           content-type: application/json
 
         updateA2-out-0:
@@ -28,7 +28,7 @@ spring:
           content-type: application/json
         consumeUpdateA2Message-in-0:
           destination: a2UpdateResponse
-          group: b2UpdateA2
+          group: service-b
           content-type: application/json
 
         deleteA2-out-0:
@@ -36,7 +36,7 @@ spring:
           content-type: application/json
         consumeDeleteA2Message-in-0:
           destination: a2DeleteResponse
-          group: b2DeleteA2
+          group: service-b
 
 ---
 spring:

@@ -26,14 +26,14 @@ spring:
       bindings:
         transformCreateMessage-in-0:
           destination: a2CreateRequest
-          #group: a2CreateA2
+          group: service-a
           content-type: application/json
         transformCreateMessage-out-0:
           destination: a2CreateResponse
           content-type: application/json
         transformUpdateMessage-in-0:
           destination: a2UpdateRequest
-          #group: a2UpdateA2
+          group: service-a
           content-type: application/json
         transformUpdateMessage-out-0:
           destination: a2UpdateResponse
@@ -41,7 +41,7 @@ spring:
 
         transformDeleteMessage-in-0:
           destination: a2DeleteRequest
-          #group: a2DeleteA2
+          group: service-a
         transformDeleteMessage-out-0:
           destination: a2DeleteResponse
 
