@@ -3,45 +3,47 @@
 spring:
   cloud.gateway:
       routes:
-        - id: service_a_get_all
+          
+        - id: service_a
           uri: lb://service-a
           predicates:
-            - Path=/api/service-a/a1
-            - Method=GET
+            - Path=/api/v1/service-a/**
           filters:
-            - RewritePath=/api/service-a/a1, /a1
-        - id: service_a_post_save
-          uri: lb://service-a
+            - RewritePath=/api/v1/service-a/(?<remaining>.*), /${remaining}
+            
+        - id: service_b
+          uri: lb://service-b
           predicates:
-            - Path=/api/service-a/a1
-            - Method=POST
+            - Path=/api/v1/service-b/**
           filters:
-            - RewritePath=/api/service-a/a1, /a1
+            - RewritePath=/api/v1/service-b/(?<remaining>.*), /${remaining}
+            
         - id: service-a-swagger-ui-1
           uri: lb://service-a
           predicates:
             - Path=/openapi/service-a/**
           filters:
             - RewritePath=/openapi/service-a/(?<path>.*), /$\{path}
+            
         - id: service-a-swagger-ui-2
           uri: lb://service-a
           predicates:
             - Path=/v3/api-docs/**
-
+          
 server:
   port: 8080
   forward-headers-strategy: framework
-  
-logging:
-  level:
-    root: INFO
-    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
-    org.springframework.cloud.gateway: TRACE
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: classpath:keystore/edge.p12
+    key-store-password: changeit
+    key-alias: localhost
 
 ---
 spring:
   config:
     activate.on-profile: docker
 
-server.port: 8080
+server.port: 8443
     

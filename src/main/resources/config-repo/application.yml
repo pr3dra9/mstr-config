@@ -8,7 +8,7 @@ spring:
       default-binder: kafka
       kafka.binder:
         brokers: localhost
-        defaultBrokerPort: 9092
+        defaultBrokerPort: 9093
 
   devtools:
     restart.enabled: false
@@ -36,7 +36,12 @@ logging:
     org.springframework.cloud.config.client: INFO
     org.springframework.cloud.config.server: INFO
     org.springframework.cloud.gateway: INFO
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
     org.springframework.cloud.client.discovery: INFO
+    org.springframework.cloud.netflix.eureka: INFO
+    org.springframework.security: INFO
+    com.netflix.discovery: INFO
+    com.netflix.eureka: INFO    
     org.springframework.web: INFO
     org.springframework.web.servlet: INFO
     org.springframework.web.client: INFO
