@@ -30,8 +30,15 @@ spring:
           predicates:
             - Path=/v3/api-docs/**
           
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
+          jwk-set-uri: http://localhost:9000/oauth2/jwks
+
 server:
-  port: 8080
+  port: 8443
   forward-headers-strategy: framework
   ssl:
     enabled: true
